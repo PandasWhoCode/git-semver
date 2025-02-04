@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/psanetra/git-semver/cli/common_opts"
-	"github.com/psanetra/git-semver/cli/compare"
-	"github.com/psanetra/git-semver/cli/latest"
-	"github.com/psanetra/git-semver/cli/log"
-	"github.com/psanetra/git-semver/cli/next"
-	"github.com/psanetra/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/cli/common_opts"
+	"github.com/andrewb1269hg/git-semver/cli/compare"
+	"github.com/andrewb1269hg/git-semver/cli/latest"
+	"github.com/andrewb1269hg/git-semver/cli/log"
+	"github.com/andrewb1269hg/git-semver/cli/next"
+	"github.com/andrewb1269hg/git-semver/logger"
 	"github.com/spf13/cobra"
 )
 

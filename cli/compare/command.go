@@ -1,8 +1,8 @@
 package compare
 
 import (
-	"github.com/psanetra/git-semver/logger"
-	"github.com/psanetra/git-semver/semver"
+	"github.com/andrewb1269hg/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/semver"
 	"github.com/spf13/cobra"
 )
 

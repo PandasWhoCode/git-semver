@@ -5,8 +5,8 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"
-	"github.com/psanetra/git-semver/logger"
-	"github.com/psanetra/git-semver/semver"
+	"github.com/andrewb1269hg/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/semver"
 	"io"
 )
 

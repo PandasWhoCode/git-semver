@@ -4,7 +4,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/plumbing/storer"
-	"github.com/psanetra/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/logger"
 )
 
 func RefToCommitHash(storer storer.EncodedObjectStorer, tagRef *plumbing.Reference) plumbing.Hash {

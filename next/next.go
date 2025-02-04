@@ -5,11 +5,11 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/revlist"
 	"github.com/pkg/errors"
-	"github.com/psanetra/git-semver/conventional_commits"
-	"github.com/psanetra/git-semver/git_utils"
-	"github.com/psanetra/git-semver/latest"
-	"github.com/psanetra/git-semver/logger"
-	"github.com/psanetra/git-semver/semver"
+	"github.com/andrewb1269hg/git-semver/conventional_commits"
+	"github.com/andrewb1269hg/git-semver/git_utils"
+	"github.com/andrewb1269hg/git-semver/latest"
+	"github.com/andrewb1269hg/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/semver"
 )
 
 type NextOptions struct {

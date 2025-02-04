@@ -2,7 +2,7 @@ package git_utils
 
 import (
 	"github.com/go-git/go-git/v5"
-	"github.com/psanetra/git-semver/semver"
+	"github.com/andrewb1269hg/git-semver/semver"
 	"io"
 )
 

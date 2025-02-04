@@ -2,9 +2,9 @@ package latest
 
 import (
 	"fmt"
-	"github.com/psanetra/git-semver/cli/common_opts"
-	"github.com/psanetra/git-semver/latest"
-	"github.com/psanetra/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/cli/common_opts"
+	"github.com/andrewb1269hg/git-semver/latest"
+	"github.com/andrewb1269hg/git-semver/logger"
 	"github.com/spf13/cobra"
 )
 
