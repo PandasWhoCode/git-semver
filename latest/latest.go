@@ -1,6 +1,7 @@
 package latest
 
 import (
+  "github.com/blang/semver"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"
@@ -110,7 +111,7 @@ func FindLatestVersionOnBranch(repo *git.Repository, majorVersionFilter int, bra
         }
 
         // Ensure the commit is on the specified branch
-        isMerged, err := repo.MergeBase(commit, branchName)
+        isMerged, err := repo.getMergeBase(commit, branchName)
         if err != nil || !isMerged {
             return nil // Skip tags not in the default branch history
         }
@@ -134,3 +135,13 @@ func FindLatestVersionOnBranch(repo *git.Repository, majorVersionFilter int, bra
 
     return latestVersion, latestTag, nil
 }
+
+func getMergeBase(repoPath, branchA, branchB string) (string, error) {
+    cmd := exec.Command("git", "-C", repoPath, "merge-base", branchA, branchB)
+    output, err := cmd.Output()
+    if err != nil {
+        return "", err
+    }
+    return strings.TrimSpace(string(output)), nil
+}
+
