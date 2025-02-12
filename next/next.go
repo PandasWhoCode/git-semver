@@ -35,12 +35,7 @@ func Next(options NextOptions) (*semver.Version, error) {
 		return nil, errors.WithMessage(err, "Could not find HEAD")
 	}
 
-  defaultBranchRef, err := repo.Reference(plumbing.ReferenceName("refs/remotes/origin/HEAD"), true)
-  if err != nil {
-      return nil, errors.WithMessage(err, "Could not determine default branch")
-  }
-
-  latestReleaseVersion, latestReleaseVersionTag, err := latest.FindLatestVersionOnBranch(repo, options.MajorVersionFilter, defaultBranchRef.Name().Short(), false)
+	latestReleaseVersion, latestReleaseVersionTag, err := latest.FindLatestVersion(repo, options.MajorVersionFilter, false)
 
 	if err != nil {
 		return nil, errors.WithMessage(err, "Error while trying to find latest release version tag")
@@ -60,13 +55,8 @@ func Next(options NextOptions) (*semver.Version, error) {
 	var latestPreReleaseVersionTag *plumbing.Reference
 
 	if options.PreReleaseOptions.ShouldBePreRelease() {
-		defaultBranchRef, err := repo.Reference(plumbing.ReferenceName("refs/remotes/origin/HEAD"), true)
-    if err != nil {
-        return nil, errors.WithMessage(err, "Could not determine default branch")
-    }
-
-    latestPreReleaseVersion, latestPreReleaseVersionTag, err = latest.FindLatestVersionOnBranch(repo, options.MajorVersionFilter, defaultBranchRef.Name().Short(), true)
-  }
+		latestPreReleaseVersion, latestPreReleaseVersionTag, err = latest.FindLatestVersion(repo, options.MajorVersionFilter, true)
+	}
 
 	if err != nil {
 		return nil, errors.WithMessage(err, "Error while trying to find latest pre-release version tag")

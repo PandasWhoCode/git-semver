@@ -1,7 +1,6 @@
 package latest
 
 import (
-  "github.com/Masterminds/semver/v3"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"
@@ -94,54 +93,3 @@ func tagNameToVersion(tagName string) *semver.Version {
 
 	return version
 }
-
-func FindLatestVersionOnBranch(repo *git.Repository, majorVersionFilter int, branchName string, preRelease bool) (*semver.Version, *plumbing.Reference, error) {
-    iter, err := repo.Tags()
-    if err != nil {
-        return nil, nil, err
-    }
-
-    var latestVersion *semver.Version
-    var latestTag *plumbing.Reference
-
-    err = iter.ForEach(func(ref *plumbing.Reference) error {
-        commit, err := repo.CommitObject(ref.Hash())
-        if err != nil {
-            return nil
-        }
-
-        // Ensure the commit is on the specified branch
-        isMerged, err := repo.getMergeBase(commit, branchName)
-        if err != nil || !isMerged {
-            return nil // Skip tags not in the default branch history
-        }
-
-        version, err := semver.ParseTolerant(ref.Name().Short())
-        if err != nil {
-            return nil
-        }
-
-        if latestVersion == nil || version.GreaterThan(latestVersion) {
-            latestVersion = &version
-            latestTag = ref
-        }
-
-        return nil
-    })
-
-    if err != nil {
-        return nil, nil, err
-    }
-
-    return latestVersion, latestTag, nil
-}
-
-func getMergeBase(repoPath, branchA, branchB string) (string, error) {
-    cmd := exec.Command("git", "-C", repoPath, "merge-base", branchA, branchB)
-    output, err := cmd.Output()
-    if err != nil {
-        return "", err
-    }
-    return strings.TrimSpace(string(output)), nil
-}
-
