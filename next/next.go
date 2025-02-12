@@ -1,15 +1,14 @@
 package next
 
 import (
+	"github.com/andrewb1269hg/git-semver/conventional_commits"
+	"github.com/andrewb1269hg/git-semver/latest"
+	"github.com/andrewb1269hg/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/semver"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/revlist"
 	"github.com/pkg/errors"
-	"github.com/andrewb1269hg/git-semver/conventional_commits"
-	"github.com/andrewb1269hg/git-semver/git_utils"
-	"github.com/andrewb1269hg/git-semver/latest"
-	"github.com/andrewb1269hg/git-semver/logger"
-	"github.com/andrewb1269hg/git-semver/semver"
 )
 
 type NextOptions struct {
@@ -41,11 +40,12 @@ func Next(options NextOptions) (*semver.Version, error) {
 		return nil, errors.WithMessage(err, "Error while trying to find latest release version tag")
 	}
 
-	if latestReleaseVersionTag != nil {
-		if err = git_utils.AssertRefIsReachable(repo, latestReleaseVersionTag, headRef, "Latest tag is not on HEAD. This is necessary as the next version is calculated based on the commits since the latest version tag."); err != nil {
-			return nil, err
-		}
-	}
+	// Removed the ancestry check here
+	// if latestReleaseVersionTag != nil {
+	//     if err = git_utils.AssertRefIsReachable(repo, latestReleaseVersionTag, headRef, "Latest tag is not on HEAD. This is necessary as the next version is calculated based on the commits since the latest version tag."); err != nil {
+	//         return nil, err
+	//     }
+	// }
 
 	if latestReleaseVersion == nil {
 		latestReleaseVersion = &semver.EmptyVersion
@@ -63,9 +63,10 @@ func Next(options NextOptions) (*semver.Version, error) {
 	}
 
 	if latestPreReleaseVersionTag != nil {
-		if err = git_utils.AssertRefIsReachable(repo, latestPreReleaseVersionTag, headRef, "Latest tag is not on HEAD. This is necessary as the next version is calculated based on the commits since the latest version tag."); err != nil {
-			return nil, err
-		}
+		// Removed the ancestry check here
+		// if err = git_utils.AssertRefIsReachable(repo, latestPreReleaseVersionTag, headRef, "Latest tag is not on HEAD. This is necessary as the next version is calculated based on the commits since the latest version tag."); err != nil {
+		//     return nil, err
+		// }
 	}
 
 	excludedCommits := make([]plumbing.Hash, 0, 1)
@@ -142,7 +143,6 @@ func Next(options NextOptions) (*semver.Version, error) {
 	}
 
 	return &nextVersion, nil
-
 }
 
 func commitMessageToSemverChange(msg *conventional_commits.ConventionalCommitMessage) semver.Change {
