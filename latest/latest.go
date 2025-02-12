@@ -60,51 +60,74 @@ func findLatestVersionTag(repo *git.Repository, majorVersionFilter int, includeP
 	}
 
 	cmd.Dir = worktree.Filesystem.Root() // Use the working directory for git commands
-	output, err := cmd.Output()
+	// We no longer need to capture the output of the command
+	_, err = cmd.Output()
 
 	if err != nil {
 		return nil, err
 	}
 
-	latestTagHash := strings.TrimSpace(string(output))
-
-	// Retrieve the tag by its hash
+	// Retrieve the tags from the repository
 	tagIter, err := repo.Tags()
 	if err != nil {
 		return nil, err
 	}
 	defer tagIter.Close()
 
-	var foundTag *plumbing.Reference
+	var foundTags []*plumbing.Reference
+
+	// Loop through all tags and filter those that match the semantic versioning format
 	for tag, err := tagIter.Next(); err != io.EOF; tag, err = tagIter.Next() {
 		if err != nil {
 			return nil, err
 		}
 
-		// Check if this tag matches the latest tag hash
-		if tag.Hash().String() == latestTagHash {
-			foundTag = tag
-			break
+		// Skip non-semantic version tags (i.e., tags that don't start with 'v')
+		if !strings.HasPrefix(tag.Name().Short(), "v") {
+			continue
+		}
+
+		// Convert the tag to a semver version
+		version, err := semver.ParseVersion(tag.Name().Short())
+		if err != nil {
+			// If parsing fails, skip this tag
+			continue
+		}
+
+		// Apply pre-release filter and major version filter
+		if (!includePreReleases && len(version.PreReleaseTag) > 0) || (majorVersionFilter >= 0 && version.Major != majorVersionFilter) {
+			continue
+		}
+
+		// Add the tag to the list of valid semantic version tags
+		foundTags = append(foundTags, tag)
+	}
+
+	// If no valid tags were found
+	if len(foundTags) == 0 {
+		return nil, errors.New("no matching semantic version tags found")
+	}
+
+	// Find the highest version tag
+	var latestTag *plumbing.Reference
+	var maxVersion *semver.Version
+	for _, tag := range foundTags {
+		version, err := semver.ParseVersion(tag.Name().Short())
+		if err != nil {
+			// Skip invalid versions
+			continue
+		}
+		if maxVersion == nil || semver.CompareVersions(version, maxVersion) > 0 {
+			maxVersion = version
+			latestTag = tag
 		}
 	}
 
-	if foundTag == nil {
-		return nil, errors.New("no matching tag found")
+	if latestTag == nil {
+		return nil, errors.New("no valid semantic version tag found")
 	}
 
-	// Convert the tag to a semver version and apply filters
-	version := tagNameToVersion(foundTag.Name().Short())
-
-	if version == nil || (!includePreReleases && len(version.PreReleaseTag) > 0) {
-		return nil, nil
-	}
-
-	// Apply the major version filter
-	if majorVersionFilter >= 0 && version.Major != majorVersionFilter {
-		return nil, nil
-	}
-
-	return foundTag, nil
+	return latestTag, nil
 }
 
 func tagNameToVersion(tagName string) *semver.Version {
