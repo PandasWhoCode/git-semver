@@ -1,12 +1,14 @@
 package latest
 
 import (
+	"github.com/andrewb1269hg/git-semver/logger"
+	"github.com/andrewb1269hg/git-semver/semver"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"
-	"github.com/andrewb1269hg/git-semver/logger"
-	"github.com/andrewb1269hg/git-semver/semver"
 	"io"
+	"os/exec"
+	"strings"
 )
 
 type LatestOptions struct {
@@ -50,36 +52,59 @@ func FindLatestVersion(repo *git.Repository, majorVersionFilter int, preRelease 
 }
 
 func findLatestVersionTag(repo *git.Repository, majorVersionFilter int, includePreReleases bool) (*plumbing.Reference, error) {
+	// Use git rev-list to get the latest tag from all branches, not just the current branch
+	cmd := exec.Command("git", "rev-list", "--tags", "--max-count=1")
+	worktree, err := repo.Worktree()
+	if err != nil {
+		return nil, err
+	}
 
-	tagIter, err := repo.Tags()
+	cmd.Dir = worktree.Filesystem.Root() // Use the working directory for git commands
+	output, err := cmd.Output()
 
 	if err != nil {
 		return nil, err
 	}
 
+	latestTagHash := strings.TrimSpace(string(output))
+
+	// Retrieve the tag by its hash
+	tagIter, err := repo.Tags()
+	if err != nil {
+		return nil, err
+	}
 	defer tagIter.Close()
 
-	var maxVersionTag *plumbing.Reference
-	var maxVersion = &semver.EmptyVersion
-
+	var foundTag *plumbing.Reference
 	for tag, err := tagIter.Next(); err != io.EOF; tag, err = tagIter.Next() {
 		if err != nil {
 			return nil, err
 		}
 
-		version := tagNameToVersion(tag.Name().Short())
-
-		if version == nil || !includePreReleases && len(version.PreReleaseTag) > 0 {
-			continue
-		}
-
-		if (majorVersionFilter < 0 || majorVersionFilter == version.Major) && semver.CompareVersions(version, maxVersion) > 0 {
-			maxVersion = version
-			maxVersionTag = tag
+		// Check if this tag matches the latest tag hash
+		if tag.Hash().String() == latestTagHash {
+			foundTag = tag
+			break
 		}
 	}
 
-	return maxVersionTag, nil
+	if foundTag == nil {
+		return nil, errors.New("no matching tag found")
+	}
+
+	// Convert the tag to a semver version and apply filters
+	version := tagNameToVersion(foundTag.Name().Short())
+
+	if version == nil || (!includePreReleases && len(version.PreReleaseTag) > 0) {
+		return nil, nil
+	}
+
+	// Apply the major version filter
+	if majorVersionFilter >= 0 && version.Major != majorVersionFilter {
+		return nil, nil
+	}
+
+	return foundTag, nil
 }
 
 func tagNameToVersion(tagName string) *semver.Version {
