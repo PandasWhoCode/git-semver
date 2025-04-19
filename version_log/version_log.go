@@ -6,10 +6,10 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/plumbing/revlist"
 	"github.com/pkg/errors"
-	"github.com/andrewb1269hg/git-semver/git_utils"
-	"github.com/andrewb1269hg/git-semver/latest"
-	"github.com/andrewb1269hg/git-semver/logger"
-	"github.com/andrewb1269hg/git-semver/semver"
+	"github.com/PandasWhoCode/git-semver/git_utils"
+	"github.com/PandasWhoCode/git-semver/latest"
+	"github.com/PandasWhoCode/git-semver/logger"
+	"github.com/PandasWhoCode/git-semver/semver"
 	"sort"
 )
 
