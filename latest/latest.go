@@ -1,8 +1,8 @@
 package latest
 
 import (
-	"github.com/andrewb1269hg/git-semver/logger"
-	"github.com/andrewb1269hg/git-semver/semver"
+	"github.com/PandasWhoCode/git-semver/logger"
+	"github.com/PandasWhoCode/git-semver/semver"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"

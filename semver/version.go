@@ -2,7 +2,7 @@ package semver
 
 import (
 	"github.com/pkg/errors"
-	"github.com/andrewb1269hg/git-semver/regex_utils"
+	"github.com/PandasWhoCode/git-semver/regex_utils"
 	"regexp"
 	"strconv"
 	"strings"

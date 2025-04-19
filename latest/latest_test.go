@@ -1,7 +1,7 @@
 package latest
 
 import (
-	"github.com/andrewb1269hg/git-semver/semver"
+	"github.com/PandasWhoCode/git-semver/semver"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -1,4 +1,4 @@
-module github.com/andrewb1269hg/git-semver
+module github.com/PandasWhoCode/git-semver
 
 require (
 	github.com/go-git/go-git/v5 v5.16.0

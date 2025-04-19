@@ -2,10 +2,10 @@ package next
 
 import (
 	"fmt"
-	"github.com/andrewb1269hg/git-semver/cli/common_opts"
-	"github.com/andrewb1269hg/git-semver/logger"
-	"github.com/andrewb1269hg/git-semver/next"
-	"github.com/andrewb1269hg/git-semver/semver"
+	"github.com/PandasWhoCode/git-semver/cli/common_opts"
+	"github.com/PandasWhoCode/git-semver/logger"
+	"github.com/PandasWhoCode/git-semver/next"
+	"github.com/PandasWhoCode/git-semver/semver"
 	"github.com/spf13/cobra"
 )
 
