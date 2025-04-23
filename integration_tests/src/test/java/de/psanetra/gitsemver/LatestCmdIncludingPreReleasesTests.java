@@ -2,6 +2,8 @@ package de.psanetra.gitsemver;
 
 import de.psanetra.gitsemver.containers.GitSemverContainer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,7 +69,7 @@ public class LatestCmdIncludingPreReleasesTests {
     }
 
     @Test
-    @Ignored("Skipping as it requires a specific version from fork source")
+    @Disabled("Skipping as it requires a specific version from fork source")
     public void shouldReturnEmptyVersionOnRepoWithoutTags() {
         try (var container = new GitSemverContainer()) {
             container.start();
