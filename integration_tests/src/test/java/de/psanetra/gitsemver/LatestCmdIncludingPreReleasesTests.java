@@ -4,7 +4,6 @@ import de.psanetra.gitsemver.containers.GitSemverContainer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LatestCmdIncludingPreReleasesTests {
