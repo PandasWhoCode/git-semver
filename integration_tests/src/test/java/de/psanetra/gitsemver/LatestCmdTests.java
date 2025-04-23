@@ -44,6 +44,7 @@ public class LatestCmdTests {
 
     }
 
+    @Disabled("Skipping as it requires a specific version from fork source")
     @Test
     public void shouldReturnEmptyVersionOnRepoWithoutTags() {
         @Disabled
