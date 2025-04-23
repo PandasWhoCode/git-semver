@@ -67,7 +67,7 @@ public class LatestCmdIncludingPreReleasesTests {
     }
 
     @Test
-    @Disabled("Skipping as it requires a specific version from fork source")
+    @Ignored("Skipping as it requires a specific version from fork source")
     public void shouldReturnEmptyVersionOnRepoWithoutTags() {
         try (var container = new GitSemverContainer()) {
             container.start();
