@@ -99,9 +99,9 @@ public class NextCmdTests {
     /**
      * In this case the next command can not calculate the next version based on the commits since the latest release.
      */
-    @Disabled
+    @Test
     public void shouldReturnErrorCodeIfLatestVersionNotReachableFromHEAD() throws IOException, InterruptedException {
-
+        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 
@@ -150,9 +150,9 @@ public class NextCmdTests {
 
     }
 
-    @Disabled
+    @Test
     public void shouldReturnFirstVersionOnRepoWithoutTags() {
-
+        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 
@@ -251,9 +251,9 @@ public class NextCmdTests {
 
     }
 
-    @Disabled
+    @Test
     public void shouldPanicIfCommitIsMissingOnShallowClone() {
-
+        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 

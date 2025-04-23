@@ -44,9 +44,9 @@ public class LatestCmdTests {
 
     }
 
-    @Disabled
+    @Test
     public void shouldReturnEmptyVersionOnRepoWithoutTags() {
-
+        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 
