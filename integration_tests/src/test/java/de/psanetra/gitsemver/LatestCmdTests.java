@@ -44,10 +44,10 @@ public class LatestCmdTests {
 
     }
 
-    @Disabled("Skipping as it requires a specific version from fork source")
+
     @Test
+    @Disabled("Skipping as it requires a specific version from fork source")
     public void shouldReturnEmptyVersionOnRepoWithoutTags() {
-        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 

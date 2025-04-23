@@ -102,7 +102,6 @@ public class NextCmdTests {
     @Disabled("Skipping as it requires a specific version from fork source")
     @Test
     public void shouldReturnErrorCodeIfLatestVersionNotReachableFromHEAD() throws IOException, InterruptedException {
-        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 
@@ -154,7 +153,6 @@ public class NextCmdTests {
     @Disabled("Skipping as it requires a specific version from fork source")
     @Test
     public void shouldReturnFirstVersionOnRepoWithoutTags() {
-        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 
@@ -256,7 +254,6 @@ public class NextCmdTests {
     @Disabled("Skipping as it requires a specific version from fork source")
     @Test
     public void shouldPanicIfCommitIsMissingOnShallowClone() {
-        @Disabled
         try (var container = new GitSemverContainer()) {
             container.start();
 
