@@ -1,7 +1,7 @@
 package semver
 
 import (
-	"github.com/andrewb1269hg/git-semver/logger"
+	"github.com/PandasWhoCode/git-semver/logger"
 )
 
 func CompareVersions(v1 *Version, v2 *Version) int {

@@ -3,11 +3,11 @@ package log
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/andrewb1269hg/git-semver/cli/common_opts"
-	"github.com/andrewb1269hg/git-semver/conventional_commits"
-	"github.com/andrewb1269hg/git-semver/logger"
-	"github.com/andrewb1269hg/git-semver/semver"
-	"github.com/andrewb1269hg/git-semver/version_log"
+	"github.com/PandasWhoCode/git-semver/cli/common_opts"
+	"github.com/PandasWhoCode/git-semver/conventional_commits"
+	"github.com/PandasWhoCode/git-semver/logger"
+	"github.com/PandasWhoCode/git-semver/semver"
+	"github.com/PandasWhoCode/git-semver/version_log"
 	"github.com/spf13/cobra"
 )
 

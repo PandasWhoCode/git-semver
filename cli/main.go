@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/andrewb1269hg/git-semver/cli/common_opts"
-	"github.com/andrewb1269hg/git-semver/cli/compare"
-	"github.com/andrewb1269hg/git-semver/cli/latest"
-	"github.com/andrewb1269hg/git-semver/cli/log"
-	"github.com/andrewb1269hg/git-semver/cli/next"
-	"github.com/andrewb1269hg/git-semver/logger"
+	"github.com/PandasWhoCode/git-semver/cli/common_opts"
+	"github.com/PandasWhoCode/git-semver/cli/compare"
+	"github.com/PandasWhoCode/git-semver/cli/latest"
+	"github.com/PandasWhoCode/git-semver/cli/log"
+	"github.com/PandasWhoCode/git-semver/cli/next"
+	"github.com/PandasWhoCode/git-semver/logger"
 	"github.com/spf13/cobra"
 )
 
