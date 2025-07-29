@@ -27,7 +27,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Setup git-semver
-        uses: PandasWhoCode/setup-git-semver@1ef681cfaf1dc3144e4971ae1347124939b0c824 # v1.0.5
+        uses: PandasWhoCode/setup-git-semver@6bb4ebdd43599b4b1ce2db197bd364612128d175 # v1.0.6
         with:
           version: latest
 
@@ -52,7 +52,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Setup git-semver
-        uses: PandasWhoCode/setup-git-semver@1ef681cfaf1dc3144e4971ae1347124939b0c824 # v1.0.5
+        uses: PandasWhoCode/setup-git-semver@6bb4ebdd43599b4b1ce2db197bd364612128d175 # v1.0.6
         with:
           version: latest
 
