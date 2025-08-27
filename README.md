@@ -15,10 +15,19 @@ $ docker pull psanetra/git-semver
 
 To build locally for testing, ensure you have `go` installed.
 
+Run `make build` to generate a `git-semver` package at `/bin/git-semver`.
+
+The make file also allows for input of filenames.
+
+To manually build without the use of the make file:
+
 1. `cd` to the `cli` folder of the repo.
 2. Run `go build -o <output_file>` to build the package.
-3. Once complete, copy the package to a location in your terminal's path.
-4. Run `source ~/.bashrc` (or appropriate `.rc` file for your terminal) to include the new package.
+
+Once the build is complete, follow these steps to ensure you can run the package:
+
+1. Once complete, copy the package to a location in your terminal's path.
+2. Run `source ~/.bashrc` (or appropriate `.rc` file for your terminal) to include the new package.
 
 ## Commands
 
