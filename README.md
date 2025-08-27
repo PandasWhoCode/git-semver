@@ -11,6 +11,15 @@ git-semver assumes that the commit messages in the git history are well-formed a
 $ docker pull psanetra/git-semver
 ```
 
+## Build Process
+
+To build locally for testing, ensure you have `go` installed.
+
+1. `cd` to the `cli` folder of the repo.
+2. Run `go build -o <output_file>` to build the package.
+3. Once complete, copy the package to a location in your terminal's path.
+4. Run `source ~/.bashrc` (or appropriate `.rc` file for your terminal) to include the new package.
+
 ## Commands
 
 ### latest
