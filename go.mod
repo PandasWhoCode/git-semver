@@ -3,7 +3,7 @@ module github.com/PandasWhoCode/git-semver
 require (
 	github.com/go-git/go-git/v5 v5.16.2
 	github.com/pkg/errors v0.9.1
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.9.4
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
 )
