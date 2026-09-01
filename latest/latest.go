@@ -7,7 +7,6 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"
 	"io"
-	"os/exec"
 	"strings"
 )
 
@@ -52,22 +51,8 @@ func FindLatestVersion(repo *git.Repository, majorVersionFilter int, preRelease 
 }
 
 func findLatestVersionTag(repo *git.Repository, majorVersionFilter int, includePreReleases bool) (*plumbing.Reference, error) {
-	// Use git rev-list to get the latest tag from all branches, not just the current branch
-	cmd := exec.Command("git", "rev-list", "--tags", "--max-count=1")
-	worktree, err := repo.Worktree()
-	if err != nil {
-		return nil, err
-	}
-
-	cmd.Dir = worktree.Filesystem.Root() // Use the working directory for git commands
-	// We no longer need to capture the output of the command
-	_, err = cmd.Output()
-
-	if err != nil {
-		return nil, err
-	}
-
-	// Retrieve the tags from the repository
+	// Retrieve the tags from the repository. All tags are considered, not just the ones
+	// reachable from the current branch.
 	tagIter, err := repo.Tags()
 	if err != nil {
 		return nil, err
