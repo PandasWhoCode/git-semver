@@ -7,7 +7,6 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"
 	"io"
-	"os/exec"
 	"strings"
 )
 
@@ -52,22 +51,8 @@ func FindLatestVersion(repo *git.Repository, majorVersionFilter int, preRelease 
 }
 
 func findLatestVersionTag(repo *git.Repository, majorVersionFilter int, includePreReleases bool) (*plumbing.Reference, error) {
-	// Use git rev-list to get the latest tag from all branches, not just the current branch
-	cmd := exec.Command("git", "rev-list", "--tags", "--max-count=1")
-	worktree, err := repo.Worktree()
-	if err != nil {
-		return nil, err
-	}
-
-	cmd.Dir = worktree.Filesystem.Root() // Use the working directory for git commands
-	// We no longer need to capture the output of the command
-	_, err = cmd.Output()
-
-	if err != nil {
-		return nil, err
-	}
-
-	// Retrieve the tags from the repository
+	// Retrieve the tags from the repository. All tags are considered, not just the ones
+	// reachable from the current branch.
 	tagIter, err := repo.Tags()
 	if err != nil {
 		return nil, err
@@ -103,9 +88,13 @@ func findLatestVersionTag(repo *git.Repository, majorVersionFilter int, includeP
 		foundTags = append(foundTags, tag)
 	}
 
-	// If no valid tags were found
+	// If no valid tags were found the repository simply has no matching version yet.
+	// This is not an error: callers interpret a nil tag as "no previous version" and
+	// fall back to the empty version (0.0.0). Returning an error here would break
+	// repositories which have not been released yet, as well as repositories whose
+	// only tags are pre-releases when pre-releases are excluded.
 	if len(foundTags) == 0 {
-		return nil, errors.New("no matching semantic version tags found")
+		return nil, nil
 	}
 
 	// Find the highest version tag
