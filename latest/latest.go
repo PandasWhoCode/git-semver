@@ -103,9 +103,13 @@ func findLatestVersionTag(repo *git.Repository, majorVersionFilter int, includeP
 		foundTags = append(foundTags, tag)
 	}
 
-	// If no valid tags were found
+	// If no valid tags were found the repository simply has no matching version yet.
+	// This is not an error: callers interpret a nil tag as "no previous version" and
+	// fall back to the empty version (0.0.0). Returning an error here would break
+	// repositories which have not been released yet, as well as repositories whose
+	// only tags are pre-releases when pre-releases are excluded.
 	if len(foundTags) == 0 {
-		return nil, errors.New("no matching semantic version tags found")
+		return nil, nil
 	}
 
 	// Find the highest version tag

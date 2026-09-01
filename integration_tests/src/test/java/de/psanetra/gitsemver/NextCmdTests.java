@@ -100,7 +100,7 @@ public class NextCmdTests {
     /**
      * In this case the next command can not calculate the next version based on the commits since the latest release.
      */
-    @Disabled("Skipping as it requires a specific version from fork source")
+    @Disabled("This fork intentionally does not assert that the latest version tag is reachable from HEAD")
     @Test
     public void shouldReturnErrorCodeIfLatestVersionNotReachableFromHEAD() throws IOException, InterruptedException {
         try (var container = new GitSemverContainer()) {
@@ -151,7 +151,6 @@ public class NextCmdTests {
 
     }
 
-    @Disabled("Skipping as it requires a specific version from fork source")
     @Test
     public void shouldReturnFirstVersionOnRepoWithoutTags() {
         try (var container = new GitSemverContainer()) {
@@ -252,7 +251,7 @@ public class NextCmdTests {
 
     }
 
-    @Disabled("Skipping as it requires a specific version from fork source")
+    @Disabled("This fork intentionally does not assert that the latest version tag is reachable from HEAD")
     @Test
     public void shouldPanicIfCommitIsMissingOnShallowClone() {
         try (var container = new GitSemverContainer()) {
